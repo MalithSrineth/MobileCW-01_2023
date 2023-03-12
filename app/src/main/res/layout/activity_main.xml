@@ -33,7 +33,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="386dp" />
+            android:layout_height="398dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,6 +68,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
