@@ -6,32 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnNewGame"
-        android:layout_width="120dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="98dp"
-        android:layout_marginTop="392dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginBottom="291dp"
-        android:text="New Game"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAbout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnAbout"
-        android:layout_width="120dp"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="390dp"
-        android:layout_marginEnd="76dp"
-        android:layout_marginBottom="293dp"
-        android:text="About"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnNewGame"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        tools:srcCompat="@drawable/wallpaper" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="72dp" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            app:srcCompat="@drawable/white_blue_logo" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="386dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnNewGme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Game" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnAbout"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="About" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
