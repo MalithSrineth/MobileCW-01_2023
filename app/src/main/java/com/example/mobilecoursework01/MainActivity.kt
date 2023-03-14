@@ -1,18 +1,10 @@
 package com.example.mobilecoursework01
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.PopupWindow
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 
@@ -38,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val newGameButton: Button = findViewById(R.id.btnNewGme)
         newGameButton.setOnClickListener{
-            startActivity(Intent(this, gameScreen::class.java))
+            startActivity(Intent(this, GameScreen::class.java))
         }
 
 

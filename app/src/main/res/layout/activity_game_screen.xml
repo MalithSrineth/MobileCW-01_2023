@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gameScreen">
+    tools:context=".GameScreen">
 
     <RadioButton
         android:id="@+id/rbh1"
@@ -208,7 +208,7 @@
         android:layout_height="19dp"
         android:fontFamily="@font/poppins_medium"
         android:gravity="right"
-        android:text="101"
+        android:text="0"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/humanRoundScore" />
