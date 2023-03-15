@@ -1,14 +1,16 @@
 package com.example.mobilecoursework01
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RadioButton
-import android.widget.TextView
+import android.text.Editable
+import android.text.InputType
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import java.util.*
 
 class GameScreen : AppCompatActivity() {
@@ -41,8 +43,12 @@ class GameScreen : AppCompatActivity() {
     private var roundSumHuman = 0
     private var roundSumComputer = 0
 
+    private var totalSumHuman = 0
+    private var totalSumComputer = 0
+
     private lateinit var humanRoundScore: TextView
     private lateinit var computerRoundScore: TextView
+    private lateinit var targetScore: TextView
 
     private lateinit var btnThrow: Button
     private lateinit var btnScore: Button
@@ -132,6 +138,7 @@ class GameScreen : AppCompatActivity() {
 
         humanRoundScore = findViewById<TextView>(R.id.humanRoundScore)
         computerRoundScore = findViewById<TextView>(R.id.computerRoundScore)
+        targetScore = findViewById<TextView>(R.id.targetScore)
 
         btnThrow = findViewById<Button>(R.id.btnThrow)
         btnScore = findViewById<Button>(R.id.btnScore)
@@ -142,6 +149,28 @@ class GameScreen : AppCompatActivity() {
         )
 
         val radioButtonStates = BooleanArray(radioButtons.size)
+
+        lateinit var target: Editable
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Set a Target Score")
+
+        val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_NUMBER
+        input.setText("101")
+        builder.setView(input)
+
+        builder.setPositiveButton("OK") { dialog, which ->
+            target = input.text
+            targetScore.text = "$target"
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, which ->
+            dialog.cancel()
+        }
+
+        val dialog = builder.create()
+        dialog.show()
 
         for (i in radioButtons.indices) {
             val radioButton = radioButtons[i]
@@ -176,40 +205,70 @@ class GameScreen : AppCompatActivity() {
             rollDice(currentDiceImagesHuman, selectedDiceMapH, currentHuman)
             throwCounter++
 
-            if (throwCounter == 1) {
-                btnThrow.text = "Throw (2)"
-            }
-            if (throwCounter == 2) {
-                btnThrow.text = "Throw (1)"
-            }
-            if (throwCounter == 3) {
-                btnThrow.isEnabled = false
-                btnScore.isPressed = true
-                btnScore.performClick()
-                btnThrow.text = "Throw"
-
-                Handler(Looper.getMainLooper()).postDelayed({
+            when (throwCounter) {
+                1 -> {
+                    btnThrow.text = "Throw (2)"
+                }
+                2 -> {
+                    btnThrow.text = "Throw (1)"
+                }
+                else -> {
+                    btnThrow.isEnabled = false
+                    btnScore.isPressed = true
+                    btnScore.performClick()
                     btnThrow.text = "Throw"
-                    throwCounter = 0
-                    btnThrow.isEnabled = true
-                    btnScore.isPressed = false
-                }, 1000)
-                btnThrow.text = "Throw (0)"
 
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        btnThrow.text = "Throw"
+                        throwCounter = 0
+                        btnThrow.isEnabled = true
+                        btnScore.isPressed = false
+                    }, 1000)
+                    btnThrow.text = "Throw (0)"
+                }
             }
-
-
-
-
         }
 
         btnScore.setOnClickListener{
+
             throwCounter = 0
             btnThrow.isEnabled = false
+
             Handler(Looper.getMainLooper()).postDelayed({
+                btnThrow.text = "Throw"
                 btnThrow.isEnabled = true
                 resetRound()
+                val builderAlert = AlertDialog.Builder(this)
+                var isPlayerWon: Boolean = true
+
+                if (totalSumComputer >= target.toString().toInt() && totalSumComputer > totalSumHuman){
+                    isPlayerWon = false
+                    builderAlert.setTitle("You lose")
+                    builderAlert.setMessage("Better luck next time!")
+                    builderAlert.setIcon(R.drawable.lose)
+                    builderAlert.setPositiveButton("OK") { dialog, which ->
+                        // do something when OK button is clicked
+                    }
+                    builderAlert.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(Color.RED)
+
+                }
+                else if (totalSumHuman >= target.toString().toInt() && totalSumHuman > totalSumComputer){
+                    isPlayerWon = true
+                    builderAlert.setTitle("You win!")
+                    builderAlert.setMessage("Congratulations!")
+                    builderAlert.setIcon(R.drawable.won)
+                    builderAlert.setPositiveButton("OK") { dialog, which ->
+                        // do something when OK button is clicked
+                    }
+                    builderAlert.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(Color.GREEN)
+
+                }
+                roundSumComputer=0
+                roundSumHuman=0
+                currentComputer.clear()
+                currentHuman.clear()
             }, 1000)
+
 
         }
     }
@@ -262,7 +321,6 @@ class GameScreen : AppCompatActivity() {
             if (tag != null) {
                 sum += tag.toString().toInt()
             }
-            //sum += imageView.tag.toString().toInt()
         }
         return sum
     }
@@ -271,8 +329,11 @@ class GameScreen : AppCompatActivity() {
         roundSumComputer = sumDice(currentComputer)
         roundSumHuman = sumDice(currentHuman)
 
-        humanRoundScore.text = "$roundSumHuman"
-        computerRoundScore.text = "$roundSumComputer"
+        totalSumComputer+=roundSumComputer
+        totalSumHuman+=roundSumHuman
+
+        humanRoundScore.text = "$totalSumHuman"
+        computerRoundScore.text = "$totalSumComputer"
 
         val drawableIdCom = resources.getIdentifier("c0", "drawable", packageName)
         val comHolderDrawable = resources.getDrawable(drawableIdCom, null)
@@ -280,13 +341,17 @@ class GameScreen : AppCompatActivity() {
         val drawableIdHum = resources.getIdentifier("h0", "drawable", packageName)
         val humHolderDrawable = resources.getDrawable(drawableIdHum, null)
 
-        for ((dice) in selectedDiceMapC) {
+        for ((dice, radioButton) in selectedDiceMapC) {
             dice.setImageDrawable(comHolderDrawable)
+            radioButton.isChecked = false
         }
 
-        for ((dice) in selectedDiceMapH) {
+        for ((dice, radioButton) in selectedDiceMapH) {
             dice.setImageDrawable(humHolderDrawable)
+            radioButton.isChecked = false
         }
+
+
     }
 
 

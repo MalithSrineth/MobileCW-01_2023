@@ -165,7 +165,7 @@
     <TextView
         android:id="@+id/roundHName"
         android:layout_width="97dp"
-        android:layout_height="19dp"
+        android:layout_height="23dp"
         android:fontFamily="@font/poppins_medium"
         android:text="You"
         android:textSize="16sp"
@@ -178,24 +178,26 @@
 
     <TextView
         android:id="@+id/titleThisRound"
-        android:layout_width="131dp"
-        android:layout_height="21dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="This Round"
+        android:layout_width="97dp"
+        android:layout_height="23dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|top"
+        android:paddingTop="0dp"
+        android:text="Target"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/targetScore"
+        app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toEndOf="@+id/computerWins"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <TextView
         android:id="@+id/roundCName"
         android:layout_width="97dp"
-        android:layout_height="19dp"
+        android:layout_height="23dp"
         android:fontFamily="@font/poppins_medium"
         android:text="Computer"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/computerRoundScore"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/computerRoundScore"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/roundHName"
@@ -205,18 +207,20 @@
     <TextView
         android:id="@+id/computerRoundScore"
         android:layout_width="34dp"
-        android:layout_height="19dp"
+        android:layout_height="23dp"
         android:fontFamily="@font/poppins_medium"
         android:gravity="right"
         android:text="0"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/humanRoundScore" />
+        app:layout_constraintTop_toBottomOf="@+id/humanRoundScore"
+        app:layout_constraintVertical_bias="0.060000002" />
 
     <TextView
         android:id="@+id/humanRoundScore"
         android:layout_width="34dp"
-        android:layout_height="19dp"
+        android:layout_height="23dp"
         android:fontFamily="@font/poppins_medium"
         android:gravity="right"
         android:text="0"
@@ -352,7 +356,8 @@
         app:layout_constraintBottom_toTopOf="@+id/c3Holder"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/guideline10" />
+        app:layout_constraintTop_toTopOf="@+id/guideline10"
+        app:layout_constraintVertical_bias="0.49" />
 
     <TextView
         android:id="@+id/nameYou"
@@ -467,5 +472,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.72" />
+
+    <TextView
+        android:id="@+id/targetScore"
+        android:layout_width="34dp"
+        android:layout_height="23dp"
+        android:gravity="right"
+        android:text="101"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/humanRoundScore"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline5"
+        app:layout_constraintVertical_bias="0.0"
+        tools:fontFamily="@font/poppins_bold" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
