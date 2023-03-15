@@ -49,11 +49,10 @@ class GameScreen : AppCompatActivity() {
     private var selectedDiceMapH: Map<ImageView, RadioButton> = mapOf()
 
     private val currentDiceImagesHuman = mutableListOf<ImageView>()
-
-    private val currentDiceImagesHuman2 = mutableListOf<ImageView>()
     private val currentDiceImagesComputer = mutableListOf<ImageView>()
 
-    private val currentComputer = mutableListOf<ImageView>()
+    private var currentComputer = mutableListOf<ImageView>()
+    private var currentHuman = mutableListOf<ImageView>()
 
     private val tempScores = mutableListOf<Int>()
 
@@ -129,7 +128,7 @@ class GameScreen : AppCompatActivity() {
         imgDiceH5.tag = 5
         imgDiceH6.tag = 6
 
-        currentDiceImagesHuman2.addAll(listOf(imgDiceH1, imgDiceH2, imgDiceH3, imgDiceH4, imgDiceH5, imgDiceH6))
+        currentDiceImagesHuman.addAll(listOf(imgDiceH1, imgDiceH2, imgDiceH3, imgDiceH4, imgDiceH5, imgDiceH6))
         currentDiceImagesComputer.addAll(listOf(imgDiceC1, imgDiceC2, imgDiceC3, imgDiceC4, imgDiceC5, imgDiceC6))
 
         humanRoundScore = findViewById<TextView>(R.id.humanRoundScore)
@@ -174,7 +173,8 @@ class GameScreen : AppCompatActivity() {
         )
 
         btnThrow.setOnClickListener {
-            rollDice(currentDiceImagesComputer)
+            rollDice(currentDiceImagesComputer, selectedDiceMapC, currentComputer)
+            rollDice(currentDiceImagesHuman, selectedDiceMapH, currentHuman)
         }
 
         btnScore.setOnClickListener{
@@ -186,63 +186,33 @@ class GameScreen : AppCompatActivity() {
 //                roundSum += dice.tag as Int
 //            }
             roundSumComputer = sumDice(currentComputer)
-            //roundSumComputer = newSumDice(tempScores)
-            //roundSumHuman = sumDice(selectedDiceMapH)
+            roundSumHuman = sumDice(currentHuman)
 
-            //humanRoundScore.text = "$roundSumHuman"
+            humanRoundScore.text = "$roundSumHuman"
             computerRoundScore.text = "$roundSumComputer"
         }
     }
 
     @SuppressLint("ResourceType")
-    private fun rollDice(diceImages: List<ImageView>) {
-//        roundSumHuman = 0
-//        roundSumComputer = 0
-        val random = Random()
-
+    private fun rollDice(diceImages: List<ImageView>, selectedDiceMap: Map<ImageView, RadioButton>, thisRoundDiceSet: MutableList<ImageView>) {
+        //val currentRoundDice = mutableListOf<ImageView>()
         var counter = 0
-        for ((dice, radioButton) in selectedDiceMapC) {
+        for ((dice, radioButton) in selectedDiceMap) {
             if (radioButton.isChecked) {
                 counter++
                 // If the RadioButton is checked, do not update the dice image
                 continue
             }
-            if (currentComputer.size == 5){
-                currentComputer.removeAt(counter)
+            if (thisRoundDiceSet.size == 5){
+                thisRoundDiceSet.removeAt(counter)
             }
-//            var tempDiceScore: Int = random.nextInt(6) + 1
-//            dice.setImageResource(getRandomDiceImage(tempDiceScore))
-//            roundSumComputer += tempDiceScore
 
             val newRandomImage = diceImages.random()
             val drawable = newRandomImage.drawable
             dice.setImageDrawable(drawable)
-//            val resourceId = resources.getIdentifier(newRandomImage.toString(), "drawable", packageName)
-//            dice.setImageResource(newRandomImage)
-            currentComputer.add(counter, newRandomImage)
-            //tempScores.add(counter, newRandomImage.tag.toString().toInt())
+            thisRoundDiceSet.add(counter, newRandomImage)
             counter++
         }
-
-
-
-
-        for ((dice, radioButton) in selectedDiceMapH) {
-            if (radioButton.isChecked) {
-                // If the RadioButton is checked, do not update the dice image
-                continue
-            }
-
-            var tempDiceScore: Int = random.nextInt(6) + 7
-            dice.setImageResource(getRandomDiceImage(tempDiceScore))
-            roundSumHuman += tempDiceScore - 6
-//            val diceImage = getRandomDiceImage(random.nextInt(6) + 7)
-//            dice.setImageResource(diceImage)
-        }
-
-
-
-
 
     }
 
