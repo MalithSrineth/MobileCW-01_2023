@@ -1,5 +1,6 @@
 package com.example.mobilecoursework01
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -48,6 +49,14 @@ class GameScreen : AppCompatActivity() {
     private var selectedDiceMapH: Map<ImageView, RadioButton> = mapOf()
 
     private val currentDiceImagesHuman = mutableListOf<ImageView>()
+
+    private val currentDiceImagesHuman2 = mutableListOf<ImageView>()
+    private val currentDiceImagesComputer = mutableListOf<ImageView>()
+
+    private val currentComputer = mutableListOf<ImageView>()
+
+    private val tempScores = mutableListOf<Int>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,6 +129,9 @@ class GameScreen : AppCompatActivity() {
         imgDiceH5.tag = 5
         imgDiceH6.tag = 6
 
+        currentDiceImagesHuman2.addAll(listOf(imgDiceH1, imgDiceH2, imgDiceH3, imgDiceH4, imgDiceH5, imgDiceH6))
+        currentDiceImagesComputer.addAll(listOf(imgDiceC1, imgDiceC2, imgDiceC3, imgDiceC4, imgDiceC5, imgDiceC6))
+
         humanRoundScore = findViewById<TextView>(R.id.humanRoundScore)
         computerRoundScore = findViewById<TextView>(R.id.computerRoundScore)
 
@@ -162,7 +174,7 @@ class GameScreen : AppCompatActivity() {
         )
 
         btnThrow.setOnClickListener {
-            rollDice()
+            rollDice(currentDiceImagesComputer)
         }
 
         btnScore.setOnClickListener{
@@ -173,25 +185,47 @@ class GameScreen : AppCompatActivity() {
 //            for (dice in currentDiceImagesList){
 //                roundSum += dice.tag as Int
 //            }
+            roundSumComputer = sumDice(currentComputer)
+            //roundSumComputer = newSumDice(tempScores)
+            //roundSumHuman = sumDice(selectedDiceMapH)
 
-            humanRoundScore.text = "$roundSumHuman"
+            //humanRoundScore.text = "$roundSumHuman"
             computerRoundScore.text = "$roundSumComputer"
         }
     }
 
-    private fun rollDice() {
-        roundSumHuman = 0
-        roundSumComputer = 0
+    @SuppressLint("ResourceType")
+    private fun rollDice(diceImages: List<ImageView>) {
+//        roundSumHuman = 0
+//        roundSumComputer = 0
         val random = Random()
+
+        var counter = 0
         for ((dice, radioButton) in selectedDiceMapC) {
             if (radioButton.isChecked) {
+                counter++
                 // If the RadioButton is checked, do not update the dice image
                 continue
             }
-            var tempDiceScore: Int = random.nextInt(6) + 1
-            dice.setImageResource(getRandomDiceImage(tempDiceScore))
-            roundSumComputer += tempDiceScore
+            if (currentComputer.size == 5){
+                currentComputer.removeAt(counter)
+            }
+//            var tempDiceScore: Int = random.nextInt(6) + 1
+//            dice.setImageResource(getRandomDiceImage(tempDiceScore))
+//            roundSumComputer += tempDiceScore
+
+            val newRandomImage = diceImages.random()
+            val drawable = newRandomImage.drawable
+            dice.setImageDrawable(drawable)
+//            val resourceId = resources.getIdentifier(newRandomImage.toString(), "drawable", packageName)
+//            dice.setImageResource(newRandomImage)
+            currentComputer.add(counter, newRandomImage)
+            //tempScores.add(counter, newRandomImage.tag.toString().toInt())
+            counter++
         }
+
+
+
 
         for ((dice, radioButton) in selectedDiceMapH) {
             if (radioButton.isChecked) {
@@ -205,6 +239,11 @@ class GameScreen : AppCompatActivity() {
 //            val diceImage = getRandomDiceImage(random.nextInt(6) + 7)
 //            dice.setImageResource(diceImage)
         }
+
+
+
+
+
     }
 
     private fun getRandomDiceImage(value: Int): Int {
@@ -223,4 +262,36 @@ class GameScreen : AppCompatActivity() {
             else -> R.drawable.h6
         }
     }
+
+    private fun sumDice(diceImages: List<ImageView>): Int {
+        var sum = 0
+        for (imageView in diceImages) {
+            val tag = imageView.tag
+            if (tag != null) {
+                sum += tag.toString().toInt()
+            }
+            //sum += imageView.tag.toString().toInt()
+        }
+        return sum
+    }
+
+    private fun newSumDice (numberList: MutableList<Int>): Int{
+        var sum = 0
+        for (index in numberList){
+            sum+=index
+        }
+        return sum
+    }
+
+//    private fun sumDice(selectedDiceMap: Map<ImageView, RadioButton>): Int {
+//        var sum = 0
+//        for ((dice) in selectedDiceMap) {
+//            currentComputer.add(dice)
+//        }
+//        for (imageView in currentComputer) {
+//            sum += imageView.tag.toString().toInt()
+//        }
+//        return sum
+//    }
 }
+
