@@ -56,11 +56,7 @@ class GameScreen : AppCompatActivity() {
     private var currentComputer = mutableListOf<ImageView>()
     private var currentHuman = mutableListOf<ImageView>()
 
-    private val tempScores = mutableListOf<Int>()
-
-
-
-    @SuppressLint("ResourceType")
+    @SuppressLint("ResourceType", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_screen)
@@ -284,11 +280,11 @@ class GameScreen : AppCompatActivity() {
         val drawableIdHum = resources.getIdentifier("h0", "drawable", packageName)
         val humHolderDrawable = resources.getDrawable(drawableIdHum, null)
 
-        for ((dice, radioButton) in selectedDiceMapC) {
+        for ((dice) in selectedDiceMapC) {
             dice.setImageDrawable(comHolderDrawable)
         }
 
-        for ((dice, radioButton) in selectedDiceMapH) {
+        for ((dice) in selectedDiceMapH) {
             dice.setImageDrawable(humHolderDrawable)
         }
     }
