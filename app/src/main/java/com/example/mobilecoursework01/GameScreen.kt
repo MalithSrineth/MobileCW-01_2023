@@ -3,6 +3,8 @@ package com.example.mobilecoursework01
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -45,8 +47,8 @@ class GameScreen : AppCompatActivity() {
     private lateinit var btnThrow: Button
     private lateinit var btnScore: Button
 
-    private var selectedDiceMapC: Map<ImageView, RadioButton> = mapOf()
-    private var selectedDiceMapH: Map<ImageView, RadioButton> = mapOf()
+    private var selectedDiceMapC: Map<ImageView, RadioButton> = mutableMapOf()
+    private var selectedDiceMapH: Map<ImageView, RadioButton> = mutableMapOf()
 
     private val currentDiceImagesHuman = mutableListOf<ImageView>()
     private val currentDiceImagesComputer = mutableListOf<ImageView>()
@@ -58,6 +60,7 @@ class GameScreen : AppCompatActivity() {
 
 
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_screen)
@@ -156,7 +159,7 @@ class GameScreen : AppCompatActivity() {
         }
 
         // Create a map of ImageView and RadioButton
-        selectedDiceMapC = mapOf(
+        selectedDiceMapC = mutableMapOf(
             c1Holder to rbc1,
             c2Holder to rbc2,
             c3Holder to rbc3,
@@ -164,7 +167,7 @@ class GameScreen : AppCompatActivity() {
             c5Holder to rbc5
         )
 
-        selectedDiceMapH = mapOf(
+        selectedDiceMapH = mutableMapOf(
             h1Holder to rbh1,
             h2Holder to rbh2,
             h3Holder to rbh3,
@@ -175,21 +178,43 @@ class GameScreen : AppCompatActivity() {
         btnThrow.setOnClickListener {
             rollDice(currentDiceImagesComputer, selectedDiceMapC, currentComputer)
             rollDice(currentDiceImagesHuman, selectedDiceMapH, currentHuman)
+            throwCounter++
+
+            if (throwCounter == 1) {
+                btnThrow.text = "Throw (2)"
+            }
+            if (throwCounter == 2) {
+                btnThrow.text = "Throw (1)"
+            }
+            if (throwCounter == 3) {
+                btnThrow.isEnabled = false
+                btnScore.isPressed = true
+                btnScore.performClick()
+                btnThrow.text = "Throw"
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    btnThrow.text = "Throw"
+                    throwCounter = 0
+                    btnThrow.isEnabled = true
+                    btnScore.isPressed = false
+                }, 1000)
+                btnThrow.text = "Throw (0)"
+
+            }
+
+
+
+
         }
 
         btnScore.setOnClickListener{
-            //roundSum = 0
-//            for (dice in listOf<ImageView>(imgDiceH1, imgDiceH2, imgDiceH3, imgDiceH4, imgDiceH5,  imgDiceH6)){
-//                roundSum += dice.tag as Int
-//            }
-//            for (dice in currentDiceImagesList){
-//                roundSum += dice.tag as Int
-//            }
-            roundSumComputer = sumDice(currentComputer)
-            roundSumHuman = sumDice(currentHuman)
+            throwCounter = 0
+            btnThrow.isEnabled = false
+            Handler(Looper.getMainLooper()).postDelayed({
+                btnThrow.isEnabled = true
+                resetRound()
+            }, 1000)
 
-            humanRoundScore.text = "$roundSumHuman"
-            computerRoundScore.text = "$roundSumComputer"
         }
     }
 
@@ -197,6 +222,7 @@ class GameScreen : AppCompatActivity() {
     private fun rollDice(diceImages: List<ImageView>, selectedDiceMap: Map<ImageView, RadioButton>, thisRoundDiceSet: MutableList<ImageView>) {
         //val currentRoundDice = mutableListOf<ImageView>()
         var counter = 0
+
         for ((dice, radioButton) in selectedDiceMap) {
             if (radioButton.isChecked) {
                 counter++
@@ -245,13 +271,28 @@ class GameScreen : AppCompatActivity() {
         return sum
     }
 
-    private fun newSumDice (numberList: MutableList<Int>): Int{
-        var sum = 0
-        for (index in numberList){
-            sum+=index
+    private fun resetRound(){
+        roundSumComputer = sumDice(currentComputer)
+        roundSumHuman = sumDice(currentHuman)
+
+        humanRoundScore.text = "$roundSumHuman"
+        computerRoundScore.text = "$roundSumComputer"
+
+        val drawableIdCom = resources.getIdentifier("c0", "drawable", packageName)
+        val comHolderDrawable = resources.getDrawable(drawableIdCom, null)
+
+        val drawableIdHum = resources.getIdentifier("h0", "drawable", packageName)
+        val humHolderDrawable = resources.getDrawable(drawableIdHum, null)
+
+        for ((dice, radioButton) in selectedDiceMapC) {
+            dice.setImageDrawable(comHolderDrawable)
         }
-        return sum
+
+        for ((dice, radioButton) in selectedDiceMapH) {
+            dice.setImageDrawable(humHolderDrawable)
+        }
     }
+
 
 //    private fun sumDice(selectedDiceMap: Map<ImageView, RadioButton>): Int {
 //        var sum = 0
