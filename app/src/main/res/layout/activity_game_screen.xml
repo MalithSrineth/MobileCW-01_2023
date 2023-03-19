@@ -63,12 +63,12 @@
         app:layout_constraintVertical_bias="0.14" />
 
     <TextView
-        android:id="@+id/yourWins"
+        android:id="@+id/humanWinsTotal"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="6dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="80"
+        android:text="00"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/letterH"
         app:layout_constraintEnd_toStartOf="@+id/divider"
@@ -78,12 +78,12 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/computerWins"
+        android:id="@+id/computerWinsTotal"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="6dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="80"
+        android:text="00"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/letterC"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
@@ -101,7 +101,7 @@
         android:text="C : "
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/divider"
-        app:layout_constraintEnd_toStartOf="@+id/computerWins"
+        app:layout_constraintEnd_toStartOf="@+id/computerWinsTotal"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/divider"
         app:layout_constraintTop_toTopOf="@+id/divider"
@@ -115,11 +115,11 @@
         android:fontFamily="@font/poppins_medium"
         android:text="  |  "
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/yourWins"
+        app:layout_constraintBottom_toBottomOf="@+id/humanWinsTotal"
         app:layout_constraintEnd_toStartOf="@+id/letterC"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/yourWins"
-        app:layout_constraintTop_toTopOf="@+id/yourWins"
+        app:layout_constraintStart_toEndOf="@+id/humanWinsTotal"
+        app:layout_constraintTop_toTopOf="@+id/humanWinsTotal"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -129,7 +129,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="H : "
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/yourWins"
+        app:layout_constraintEnd_toStartOf="@+id/humanWinsTotal"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
@@ -187,7 +187,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/targetScore"
         app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toEndOf="@+id/computerWins"
+        app:layout_constraintStart_toEndOf="@+id/computerWinsTotal"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <TextView
@@ -197,12 +197,10 @@
         android:fontFamily="@font/poppins_medium"
         android:text="Computer"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/computerRoundScore"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/roundHName"
-        app:layout_constraintTop_toTopOf="@+id/computerRoundScore"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/computerRoundScore" />
 
     <TextView
         android:id="@+id/computerRoundScore"
@@ -212,10 +210,8 @@
         android:gravity="right"
         android:text="0"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/humanRoundScore"
-        app:layout_constraintVertical_bias="0.060000002" />
+        app:layout_constraintTop_toBottomOf="@+id/humanRoundScore" />
 
     <TextView
         android:id="@+id/humanRoundScore"
@@ -240,6 +236,7 @@
         android:layout_width="32dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"
+        android:clickable="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="@+id/c4Holder"
         app:layout_constraintStart_toStartOf="@+id/c4Holder"
@@ -251,6 +248,7 @@
         android:layout_width="32dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"
+        android:clickable="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="@+id/c3Holder"
         app:layout_constraintStart_toStartOf="@+id/c3Holder"
@@ -262,6 +260,7 @@
         android:layout_width="32dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"
+        android:clickable="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="@+id/c1Holder"
         app:layout_constraintStart_toStartOf="@+id/c1Holder"
@@ -273,6 +272,7 @@
         android:layout_width="32dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"
+        android:clickable="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="@+id/c5Holder"
         app:layout_constraintHorizontal_bias="0.444"
@@ -285,6 +285,7 @@
         android:layout_width="32dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"
+        android:clickable="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="@+id/c2Holder"
         app:layout_constraintStart_toStartOf="@+id/c2Holder"
