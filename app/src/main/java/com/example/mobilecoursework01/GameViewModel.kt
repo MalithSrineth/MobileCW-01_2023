@@ -2,16 +2,19 @@ package com.example.mobilecoursework01
 
 import android.text.Editable
 import android.widget.ImageView
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel() {
-    var currentComputer: MutableList<ImageView> = mutableListOf()
-    var currentHuman: MutableList<ImageView> = mutableListOf()
+    //var currentComputer: MutableList<ImageView> = mutableListOf()
+    val currentComputer = MutableLiveData<List<ImageView>>()
+    val currentHuman = MutableLiveData<List<ImageView>>()
     var humanRoundScore: String = ""
     var computerRoundScore: String = ""
     var targetScore: String = ""
     var humanWinsTotal: String = ""
     var computerWinsTotal: String = ""
+    var btnThrow: String = ""
 
     var throwCounter = 0
     var roundSumHuman = 0
@@ -22,6 +25,6 @@ class GameViewModel : ViewModel() {
     var totalWinsHuman = 0
     var totalWinsComputer = 0
 
-    var target = 200
+    var target = 101
 
 }

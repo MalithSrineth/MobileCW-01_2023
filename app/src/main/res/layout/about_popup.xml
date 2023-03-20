@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#03A9F4"
+    android:visibility="visible">
+
+    <TextView
+        android:id="@+id/abtPopupDetails"
+        android:layout_width="277dp"
+        android:layout_height="158dp"
+        android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
+        android:text="I confirm that I understand what plagiarism is and have read and understood the section on assessment offences in the essential information for students. The work that I have submitted is entirely my own. Any work from other authors is duly referenced and acknowledged."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.624"
+        tools:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/abtPopupName"
+        android:layout_width="200dp"
+        android:layout_height="49dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Malith Amarawickrama 20210353"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/abtPopupDetails"
+        app:layout_constraintEnd_toEndOf="@+id/abtPopupDetails"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="@+id/abtPopupDetails"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.817" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

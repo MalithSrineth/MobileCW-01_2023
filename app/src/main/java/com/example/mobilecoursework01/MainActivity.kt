@@ -1,12 +1,17 @@
 package com.example.mobilecoursework01
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.PopupWindow
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 
@@ -15,39 +20,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        var button = findViewById<Button>(R.id.btnAbout)
-//
-//        button.setOnClickListener {
-//            // Inflate the pop-up layout file
-//            val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//            val popUpView = inflater.inflate(R.layout.aboutpopup, null)
-//
-//            // Create the pop-up window
-//            val popup = PopupWindow(popUpView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
-//            popup.showAtLocation(button, Gravity.CENTER, 0, 0)
-//
-//            // Set up any UI elements inside the pop-up window as desired
-//
-//        }
+        val newIntent = intent
+        val totalWinsComputer = newIntent.getIntExtra("totalWinsComputer",0)
+        val totalWinsHuman = newIntent.getIntExtra("totalWinsHuman",0)
+        val computerWinsTotal = newIntent.getStringExtra("computerWinsTotal")
+        val humanWinsTotal = newIntent.getStringExtra("humanWinsTotal")
+
+
 
         val newGameButton: Button = findViewById(R.id.btnNewGme)
         newGameButton.setOnClickListener{
-            startActivity(Intent(this, GameScreen::class.java))
-        }
+            val gameIntent = Intent (this, GameScreen::class.java)
+            gameIntent.putExtra("totalWinsComputer", totalWinsComputer)
+            gameIntent.putExtra("totalWinsHuman", totalWinsHuman)
+            gameIntent.putExtra("computerWinsTotal", computerWinsTotal)
+            gameIntent.putExtra("humanWinsTotal", humanWinsTotal)
+            startActivity(gameIntent)
 
+        }
 
         val aboutButton: Button = findViewById(R.id.btnAbout)
         aboutButton.setOnClickListener {
-            // Do something in response to the about button click
+            val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val popupView = inflater.inflate(R.layout.about_popup, null)
+            val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            popupWindow.width = ViewGroup.LayoutParams.MATCH_PARENT
+            popupWindow.height = ViewGroup.LayoutParams.MATCH_PARENT
+            popupWindow.showAtLocation(aboutButton, Gravity.CENTER, 0,0)
+            popupView.setOnClickListener{
+                popupWindow.dismiss()
+            }
 
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Malith Amarawickrama 20210353")
-            builder.setMessage("I confirm that I understand what plagiarism is and have read and understood the section on assessment offences in the essential information for students. The work that I have submitted is entirely my own. Any work from other authors is duly referenced and acknowledged.")
-            builder.setNeutralButton("Ok"){dialog, id -> dialog.cancel()}
-            builder.show()
         }
 
     }
+
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
